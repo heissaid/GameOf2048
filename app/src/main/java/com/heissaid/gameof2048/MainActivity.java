@@ -1,10 +1,13 @@
 package com.heissaid.gameof2048;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.FileInputStream;
@@ -12,20 +15,31 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import static com.heissaid.gameof2048.R.id.gameView;
+import static com.heissaid.gameof2048.R.id.tvScore;
+
 public class MainActivity extends AppCompatActivity {
 
     public MainActivity() {
-        mainActivity=this;
+        mainActivity = this;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tvScore=(TextView) findViewById(R.id.tvScore);
-        highestScore=(TextView) findViewById(R.id.hiScore);
+        tvScore = (TextView) findViewById(R.id.tvScore);
+        highestScore = (TextView) findViewById(R.id.hiScore);
 
+        gameView = (GameView) findViewById(R.id.gameView);
+        restartButton = (Button) findViewById(R.id.restart_button);
 
+        restartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameView.startGame();
+            }
+        });
 
 
         // 读取历史最高分
@@ -46,28 +60,25 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        highestScore.setText(historyScore+"");
+        highestScore.setText(historyScore + "");
 
     }
-
 
 
     public void clearScore() {
-        score=0;
+        score = 0;
         showScore();
     }
 
-    public void showScore(){
-        tvScore.setText(score+"");
+    public void showScore() {
+        tvScore.setText(score + "");
     }
 
     public void addScore(int s) {
-        score+=s;
+        score += s;
         showScore();
         showHighestScore();
     }
-
-
 
 
     @Override
@@ -89,15 +100,14 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    public void showHighestScore(){
+    public void showHighestScore() {
         // 更新最高分
         if (score > historyScore) {
-            overhistroy=true;
+            overhistroy = true;
             historyScore = (long) score;
-            highestScore.setText(historyScore+"");
+            highestScore.setText(historyScore + "");
         }
     }
-
 
 
     /**
@@ -108,19 +118,24 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 是否超出了最高分，如果超出了，则在退出时会保存数据
      */
-    private static boolean overhistroy=false;
+    private static boolean overhistroy = false;
 
-    String SCORE="hiScore.txt";
+    String SCORE = "hiScore.txt";
 
 
-    private static final String HIGH_KEY="hi-score";
-    private int score=0;
+    private static final String HIGH_KEY = "hi-score";
+    private int score = 0;
     private TextView tvScore;
     private TextView highestScore;
-    private static MainActivity mainActivity=null;
+    private static MainActivity mainActivity = null;
 
     public static MainActivity getMainActivity() {
         return mainActivity;
     }
+
+
+    private GameView gameView;
+    private Button restartButton;
+
 
 }

@@ -109,7 +109,7 @@ public class GameView extends GridLayout {
         }
     }
 
-    private void startGame() {
+    public void startGame() {
 
         MainActivity.getMainActivity().clearScore();
         MainActivity.getMainActivity().showHighestScore();
@@ -296,7 +296,7 @@ public class GameView extends GridLayout {
         }
 
         if (checkCompete) {
-            new AlertDialog.Builder(getContext()).setTitle("你好").setMessage("游戏结束")
+            new AlertDialog.Builder(getContext()).setTitle("游戏结束").setMessage("请重新开始游戏")
                     .setCancelable(false).setPositiveButton("重来", new DialogInterface.OnClickListener() {
 
                 @Override

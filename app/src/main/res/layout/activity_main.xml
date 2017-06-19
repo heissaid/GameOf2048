@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity"
-    tools:ignore="MergeRootFrame">
+    tools:ignore="MergeRootFrame"
+    android:background="@color/colorPrimary">
 
     <com.heissaid.gameof2048.GameView
         android:id="@+id/gameView"
@@ -16,6 +17,12 @@
 
     </com.heissaid.gameof2048.GameView>
 
+    <Button
+        android:id="@+id/restart_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="重新开始"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,7 +31,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="当前分数\t\t" />
+            android:text="当前得分\t\t\t\t" />
 
         <TextView
             android:id="@+id/tvScore"
